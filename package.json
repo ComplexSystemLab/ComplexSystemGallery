@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "gen:tree": "node scripts/build-project-tree.mjs",
+    "predev": "pnpm gen:tree",
     "dev": "vite",
+    "prebuild": "pnpm gen:tree",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

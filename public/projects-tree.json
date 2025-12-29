@@ -1,0 +1,115 @@
+{
+  "type": "root",
+  "name": "Projects",
+  "path": "",
+  "children": [
+    {
+      "type": "project",
+      "name": "生成2D随机可通地形地图",
+      "path": "生成2D随机可通地形地图"
+    },
+    {
+      "type": "project",
+      "name": "cascade_reaction",
+      "path": "cascade_reaction"
+    },
+    {
+      "type": "project",
+      "name": "cascading_failures",
+      "path": "cascading_failures"
+    },
+    {
+      "type": "folder",
+      "name": "Diplomatic",
+      "path": "Diplomatic",
+      "children": [
+        {
+          "type": "project",
+          "name": "art_of_diplomatic_v1.0",
+          "path": "Diplomatic/art_of_diplomatic_v1.0"
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "elements_interaction",
+      "path": "elements_interaction",
+      "children": [
+        {
+          "type": "project",
+          "name": "3_elements_reaction",
+          "path": "elements_interaction/3_elements_reaction"
+        },
+        {
+          "type": "project",
+          "name": "elements_reaction_dynamic_system",
+          "path": "elements_interaction/elements_reaction_dynamic_system"
+        },
+        {
+          "type": "project",
+          "name": "particle_interaction",
+          "path": "elements_interaction/particle_interaction"
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "name": "generate_traffic_network",
+      "path": "generate_traffic_network"
+    },
+    {
+      "type": "project",
+      "name": "graph_algorithms-js",
+      "path": "graph_algorithms-js"
+    },
+    {
+      "type": "folder",
+      "name": "grid_evoluation",
+      "path": "grid_evoluation",
+      "children": [
+        {
+          "type": "project",
+          "name": "《自然规律支配偶然性》_jl",
+          "path": "grid_evoluation/《自然规律支配偶然性》_jl"
+        },
+        {
+          "type": "project",
+          "name": "《自然规律支配偶然性》_js",
+          "path": "grid_evoluation/《自然规律支配偶然性》_js"
+        },
+        {
+          "type": "project",
+          "name": "《自然规律支配偶然性》_MATLAB",
+          "path": "grid_evoluation/《自然规律支配偶然性》_MATLAB"
+        },
+        {
+          "type": "project",
+          "name": "《自然规律支配偶然性》_py",
+          "path": "grid_evoluation/《自然规律支配偶然性》_py"
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "name": "hierarchical_traffic_network",
+      "path": "hierarchical_traffic_network"
+    },
+    {
+      "type": "project",
+      "name": "navigation",
+      "path": "navigation"
+    },
+    {
+      "type": "project",
+      "name": "navigation_and_pathfinding",
+      "path": "navigation_and_pathfinding"
+    },
+    {
+      "type": "project",
+      "name": "navigation-html-js",
+      "path": "navigation-html-js"
+    }
+  ],
+  "generatedAt": "2025-12-29T17:24:06.715Z",
+  "source": "ComplexSystemLab/ComplexSystemLab/Projects"
+}
