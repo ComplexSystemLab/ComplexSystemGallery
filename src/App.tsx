@@ -3,6 +3,12 @@ import "./App.css";
 import type { ProjectTree as ProjectTreeType } from "./types/projectTree";
 import { ProjectTree } from "./components/ProjectTree";
 
+function gotoProject(path: string) {
+  const url = `/project?path=${encodeURIComponent(path)}`;
+  window.history.pushState({}, "", url);
+  window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
 export default function App() {
   const [tree, setTree] = React.useState<ProjectTreeType | null>(null);
   const [error, setError] = React.useState<string | null>(null);
@@ -60,7 +66,10 @@ export default function App() {
                   <ProjectTree
                     key={`${n.type}:${n.path}`}
                     node={n}
-                    onSelectProject={setSelected}
+                    onSelectProject={(p) => {
+                      setSelected(p);
+                      gotoProject(p);
+                    }}
                     selectedPath={selected}
                   />
                 ))}
@@ -78,9 +87,14 @@ export default function App() {
               <code className="detail-path">{selected}</code>
 
               <div className="detail-actions">
+                <button type="button" className="mini-btn" onClick={() => gotoProject(selected)}>
+                  打开项目页面
+                </button>
+
                 <button
                   type="button"
                   className="mini-btn"
+                  style={{ marginLeft: 8 }}
                   onClick={async () => {
                     try {
                       await navigator.clipboard.writeText(selected);
@@ -93,14 +107,10 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="detail-note">
-                下一步你可以在这里：读取该目录下的 README / project.txt
-                <br />
-                或根据路径加载对应 demo（比如 viz/index.html）。
-              </div>
+              <div className="detail-note">当前仅对 graph_algorithms-js 的三个子项目做了移植展示，其它项目暂不处理。</div>
             </div>
           ) : (
-            <div className="detail-box muted">点击左侧叶子项目（包含 project.txt 的文件夹）以查看路径。</div>
+            <div className="detail-box muted">点击左侧叶子项目（包含 project.txt 的文件夹）以进入项目界面。</div>
           )}
         </section>
       </main>

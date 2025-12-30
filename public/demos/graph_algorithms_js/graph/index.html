@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graph Connectivity - graph_algorithms-js</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+      #app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+      #controls { padding: 12px 14px; border-right: 1px solid rgba(127,127,127,0.35); overflow: auto; }
+      #canvasWrap { position: relative; }
+      #canvas { position: absolute; inset: 0; }
+      .row { margin: 10px 0; display: grid; gap: 6px; }
+      .row label { font-size: 12px; opacity: 0.85; }
+      .row input, .row select, .row button { width: 100%; box-sizing: border-box; padding: 6px 8px; }
+      .row .inline { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .hint { font-size: 12px; opacity: 0.75; line-height: 1.35; }
+      .stats { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; opacity: 0.85; white-space: pre-wrap; }
+      .status { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; opacity: 0.85; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <aside id="controls">
+        <h3 style="margin: 6px 0 10px">Graph connectivity</h3>
+
+        <div class="row">
+          <label for="status">Status</label>
+          <div id="status" class="status">booting…</div>
+        </div>
+
+        <div class="row">
+          <label for="seedInput">Seed</label>
+          <div class="inline">
+            <input id="seedInput" type="number" value="42" />
+            <button id="randomSeedBtn" type="button">Random</button>
+          </div>
+          <div class="hint">Tip: after changing Seed/Params, click <b>Regenerate</b>.</div>
+        </div>
+
+        <div id="paramArea"></div>
+
+        <div class="row">
+          <div class="inline">
+            <button id="regenBtn" type="button">Regenerate</button>
+            <button id="resetBtn" type="button">Reset params</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="output">Output</label>
+          <textarea id="output" class="stats" rows="10" readonly style="resize: vertical;"></textarea>
+        </div>
+
+        <div class="row">
+          <label>Stats</label>
+          <div id="stats" class="stats"></div>
+        </div>
+
+        <div class="hint">
+          ComplexSystemGallery 内嵌原生 viz（p5.js）。
+        </div>
+      </aside>
+      <main id="canvasWrap">
+        <div id="canvas"></div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+    <script src="./algorithms.bundle.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
+
