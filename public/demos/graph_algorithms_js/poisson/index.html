@@ -1,75 +1,73 @@
 <!doctype html>
-</html>
-  </body>
-    <script src="./app.js"></script>
-    <script src="./algorithms.bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poisson Disk - graph_algorithms-js</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+      #app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+      #controls { padding: 12px 14px; border-right: 1px solid rgba(127,127,127,0.35); overflow: auto; }
+      #canvasWrap { position: relative; }
+      #canvas { position: absolute; inset: 0; }
+      .row { margin: 10px 0; display: grid; gap: 6px; }
+      .row label { font-size: 12px; opacity: 0.85; }
+      .row input, .row select, .row button { width: 100%; box-sizing: border-box; padding: 6px 8px; }
+      .row .inline { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .hint { font-size: 12px; opacity: 0.75; line-height: 1.35; }
+      .stats { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; opacity: 0.85; white-space: pre-wrap; }
+      .status { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; opacity: 0.85; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <aside id="controls">
+        <h3 style="margin: 6px 0 10px">Poisson Disk</h3>
 
-    </div>
-      </main>
-        <div id="canvas"></div>
-      <main id="canvasWrap">
-      </aside>
-        </div>
-          ComplexSystemGallery 内嵌原生 viz（p5.js）。
-        <div class="hint">
-
-        </div>
-          <div id="stats" class="stats"></div>
-          <label>Stats</label>
         <div class="row">
-
+          <label for="status">Status</label>
+          <div id="status" class="status">booting…</div>
         </div>
-          <textarea id="output" class="stats" rows="10" readonly style="resize: vertical;"></textarea>
-          <label for="output">Output</label>
+
         <div class="row">
-
-        </div>
-          </div>
-            <button id="resetBtn" type="button">Reset params</button>
-            <button id="regenBtn" type="button">Regenerate</button>
+          <label for="seedInput">Seed</label>
           <div class="inline">
-        <div class="row">
+            <input id="seedInput" type="number" value="42" />
+            <button id="randomSeedBtn" type="button">Random</button>
+          </div>
+          <div class="hint">Tip: after changing Seed/Params, click <b>Regenerate</b>.</div>
+        </div>
 
         <div id="paramArea"></div>
 
-        </div>
-          <div class="hint">Tip: after changing Seed/Params, click <b>Regenerate</b>.</div>
-          </div>
-            <button id="randomSeedBtn" type="button">Random</button>
-            <input id="seedInput" type="number" value="42" />
+        <div class="row">
           <div class="inline">
-          <label for="seedInput">Seed</label>
-        <div class="row">
-
+            <button id="regenBtn" type="button">Regenerate</button>
+            <button id="resetBtn" type="button">Reset params</button>
+          </div>
         </div>
-          <div id="status" class="status">booting…</div>
-          <label for="status">Status</label>
-        <div class="row">
 
-        <h3 style="margin: 6px 0 10px">Poisson Disk</h3>
-      <aside id="controls">
-    <div id="app">
-  <body>
-  </head>
-    </style>
-      .status { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; opacity: 0.85; }
-      .stats { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; opacity: 0.85; white-space: pre-wrap; }
-      .hint { font-size: 12px; opacity: 0.75; line-height: 1.35; }
-      .row .inline { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-      .row input, .row select, .row button { width: 100%; box-sizing: border-box; padding: 6px 8px; }
-      .row label { font-size: 12px; opacity: 0.85; }
-      .row { margin: 10px 0; display: grid; gap: 6px; }
-      #canvas { position: absolute; inset: 0; }
-      #canvasWrap { position: relative; }
-      #controls { padding: 12px 14px; border-right: 1px solid rgba(127,127,127,0.35); overflow: auto; }
-      #app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
-      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
-      :root { color-scheme: light dark; }
-    <style>
-    <title>Poisson Disk - graph_algorithms-js</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="UTF-8" />
-  <head>
-<html lang="zh-CN">
+        <div class="row">
+          <label for="output">Output</label>
+          <textarea id="output" class="stats" rows="10" readonly style="resize: vertical;"></textarea>
+        </div>
+
+        <div class="row">
+          <label>Stats</label>
+          <div id="stats" class="stats"></div>
+        </div>
+
+        <div class="hint">ComplexSystemGallery 内嵌原生 viz（p5.js）。</div>
+      </aside>
+      <main id="canvasWrap">
+        <div id="canvas"></div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+    <script src="./algorithms.bundle.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
 
