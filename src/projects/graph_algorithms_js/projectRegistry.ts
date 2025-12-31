@@ -1,27 +1,22 @@
 import React from "react";
 import type { GalleryProjectEntry } from "../projectRegistry";
 
+import { BLOCK_CONNECTIVITY_PROJECT_ENTRY, BLOCK_CONNECTIVITY_PROJECT_PATH } from "./block_connectivity/projectEntry";
+import { GRAPH_CONNECTIVITY_PROJECT_ENTRY, GRAPH_CONNECTIVITY_PROJECT_PATH } from "./graph_connectivity/projectEntry";
+import { POISSON_DISK_PROJECT_ENTRY, POISSON_DISK_PROJECT_PATH } from "./poisson_disk/projectEntry";
+
 /**
  * graph_algorithms-js 的项目路径前缀。
  */
 const ROOT_PREFIX = "graph_algorithms-js/projects/";
 
 /**
- * 将 graph_algorithms-js 的叶子项目映射到 Gallery 中的静态 Demo URL。
+ * 将 graph_algorithms-js 的叶子项目路径映射到对应的 Gallery 注册条目。
  */
-const PROJECT_TO_DEMO_URL: Record<string, { title: string; url: string }> = {
-	"graph_algorithms-js/projects/block_connectivity": {
-		title: "block_connectivity（方块连通性）",
-		url: "/demos/graph_algorithms_js/block/index.html",
-	},
-	"graph_algorithms-js/projects/graph_connectivity": {
-		title: "graph_connectivity（图连通性）",
-		url: "/demos/graph_algorithms_js/graph/index.html",
-	},
-	"graph_algorithms-js/projects/poisson_disk": {
-		title: "poisson_disk（泊松圆盘采样）",
-		url: "/demos/graph_algorithms_js/poisson/index.html",
-	},
+const GRAPH_ALGORITHMS_PROJECT_ENTRY_MAP: Readonly<Record<string, GalleryProjectEntry>> = {
+	[BLOCK_CONNECTIVITY_PROJECT_PATH]: BLOCK_CONNECTIVITY_PROJECT_ENTRY,
+	[GRAPH_CONNECTIVITY_PROJECT_PATH]: GRAPH_CONNECTIVITY_PROJECT_ENTRY,
+	[POISSON_DISK_PROJECT_PATH]: POISSON_DISK_PROJECT_ENTRY,
 };
 
 /**
@@ -32,21 +27,12 @@ const PROJECT_TO_DEMO_URL: Record<string, { title: string; url: string }> = {
  */
 export function getGraphAlgorithmsProjectEntry(projectPath: string): GalleryProjectEntry | null {
 	if (!projectPath.startsWith(ROOT_PREFIX)) return null;
-	const mapped = PROJECT_TO_DEMO_URL[projectPath];
-	if (!mapped) return null;
 
-	return {
-		projectPath,
-		title: mapped.title,
-		visibleInTree: true,
-		render: () =>
-			React.createElement("iframe", {
-				title: mapped.title,
-				src: mapped.url,
-				className: "project-iframe",
-				loading: "lazy",
-				referrerPolicy: "no-referrer",
-			}),
-	};
+	// 这里保留对 React 的引用：即便条目来自子模块，本模块也属于“项目注册入口”。
+	void React;
+
+	const entry = GRAPH_ALGORITHMS_PROJECT_ENTRY_MAP[projectPath];
+	if (!entry) return null;
+	return entry;
 }
 
