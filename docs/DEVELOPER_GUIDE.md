@@ -1,6 +1,6 @@
 # 开发者手册（ComplexSystemGallery）
 
-本文档面向维护者，描述运行方式、工程结构、项目树生成机制，以及常见维护流程。
+本文件面向维护者，描述运行方式、工程结构、项目树生成机制，以及常见维护流程。
 
 ## 0. 你需要知道的“核心机制”
 
@@ -9,6 +9,22 @@
 - **脚本默认会扫描同级仓库 `ComplexSystemLab` 的 `ComplexSystemLab/Projects`**
 - 判定“叶子项目”的标准：目录下存在 `project.txt`
 - `package.json` 的 `predev`/`prebuild` 会在启动/构建前自动执行 `pnpm gen:tree`
+
+## 0.1 文档体系与维护要求（重要）
+
+本仓库的文档统一放在 `docs/`：
+
+- `docs/README.md`：文档目录索引
+- `docs/PRD.md`：产品需求文档（产品目标、范围、功能/非功能需求、里程碑）
+- `docs/USER_MANUAL.md`：产品用户手册（面向使用者的使用说明与 FAQ）
+- `docs/CHANGELOG.md`：开发日志/变更记录（每次改动需要追加一条）
+
+维护规范（请严格遵循）：
+
+- 每一次 **新增功能 / 改动功能 / 修复错误**：
+  1. 代码改动完成后，先通过构建/校验（例如 `pnpm lint`、`pnpm build`）。
+  2. 同步更新相关文档（本手册、用户手册、PRD 视情况）。
+  3. **务必**在 `docs/CHANGELOG.md` 追加变更记录。
 
 ## 1. 环境与依赖
 
@@ -143,4 +159,3 @@ pnpm lint
 - 让 `LAB_PROJECTS_ROOT` 支持环境变量覆盖
 - 给 `gen:tree` 增加 `--root` 参数
 - 在前端提供“重新生成/刷新项目树”的按钮（开发模式下）
-

@@ -6,6 +6,18 @@
 
 > 说明：本仓库默认假设 `ComplexSystemGallery` 与 `ComplexSystemLab` 在同一个父目录下（脚本会去 `../ComplexSystemLab/ComplexSystemLab/Projects` 查找）。
 
+## 文档入口（必读）
+
+所有文档在 `docs/`：
+
+- `docs/README.md`：文档目录
+- `docs/PRD.md`：产品需求文档
+- `docs/USER_MANUAL.md`：产品用户手册
+- `docs/DEVELOPER_GUIDE.md`：开发者手册
+- `docs/CHANGELOG.md`：开发日志 / 变更记录
+
+> 维护要求：每一次新增/改动/修复，在完成校验后都需要同步更新相关文档，并在 `docs/CHANGELOG.md` 追加记录。
+
 ## 主要特性
 
 - 自动生成项目树（`public/projects-tree.json`）
@@ -64,21 +76,15 @@ pnpm preview
 可选处理方式：
 
 1. 把 `ComplexSystemLab` 放到与本仓库同级目录；或
-2. 修改 `scripts/build-project-tree.mjs` 里的 `LAB_PROJECTS_ROOT` 指向你的实际路径。
+2. 修改 `scripts/build-project-tree.mjs` 里的扫描根路径。
 
 ## 代码结构（摘要）
 
 - `src/main.tsx`：应用入口（渲染 `Router`）
-- `src/Router.tsx`：顶层路由组件（当前文件为空，需要按你的产品形态实现路由/布局）
+- `src/Router.tsx`：顶层路由组件（当前文件为空，需要按产品形态实现路由/布局）
 - `src/components/ProjectTree.tsx`：项目树 UI
 - `src/types/projectTree.ts`：项目树节点类型
 - `public/projects-tree.json`：项目树数据（由脚本生成）
-
-## 开发者文档
-
-更详细的维护说明见：
-
-- `docs/DEVELOPER_GUIDE.md`
 
 ## 常见问题（FAQ）
 
