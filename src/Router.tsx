@@ -22,12 +22,6 @@ type Route =
 
 /**
  * 从浏览器地址栏解析路由。
- *
- * Args:
- *   location: 浏览器 `window.location`。
- *
- * Returns:
- *   当前路由。
  */
 function parseRoute(location: Location): Route {
   if (location.pathname === "/project") {
@@ -38,22 +32,13 @@ function parseRoute(location: Location): Route {
   return { kind: "home" };
 }
 
-/**
- * 进入项目页（会写入浏览器历史并触发 `popstate`）。
- *
- * Args:
- *   projectPath: 项目路径（相对 `Projects` 根目录）。
- */
-export function gotoProject(projectPath: string) {
+function gotoProject(projectPath: string) {
   const url = `/project?path=${encodeURIComponent(projectPath)}`;
   window.history.pushState({}, "", url);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
-/**
- * 返回项目树主页（会写入浏览器历史并触发 `popstate`）。
- */
-export function gotoHome() {
+function gotoHome() {
   window.history.pushState({}, "", "/");
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
