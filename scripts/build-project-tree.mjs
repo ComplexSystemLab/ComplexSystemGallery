@@ -63,21 +63,55 @@ function listSubDirs(dirPath) {
     .filter((name) => !name.startsWith(".") && !IGNORED.has(name));
 }
 
+function listDirectFiles(dirPath) {
+  let entries = [];
+  try {
+    entries = fs.readdirSync(dirPath, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+
+  return entries.filter((entry) => entry.isFile()).map((entry) => entry.name);
+}
+
+function listProjectFiles(dirPath) {
+  return listDirectFiles(dirPath)
+    .filter((name) => !name.startsWith("."))
+    .sort((a, b) => a.localeCompare(b, "zh-Hans-CN"))
+    .slice(0, 20);
+}
+
+function pickHtmlEntryFile(dirPath) {
+  const htmlFiles = listDirectFiles(dirPath)
+    .filter((name) => name.toLowerCase().endsWith(".html"))
+    .sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+
+  if (htmlFiles.length === 0) return null;
+
+  const preferred = ["index.html", "index_p5.html", "index_q5.html", "index_pixi.html"];
+  for (const candidate of preferred) {
+    const found = htmlFiles.find((name) => name.toLowerCase() === candidate);
+    if (found) return found;
+  }
+
+  const indexLike = htmlFiles.find((name) => name.toLowerCase().startsWith("index_"));
+  if (indexLike) return indexLike;
+
+  return htmlFiles[0];
+}
+
 function normalizeRelPath(rel) {
   return rel.replaceAll("\\", "/");
 }
 
+function toProjectSourceUrl(relPath) {
+  return `/projects-src/${normalizeRelPath(relPath)}`;
+}
+
 function buildNode(absDir, relFromProjectsRoot) {
   const name = path.basename(absDir);
-
-  // If this folder contains project.txt, it's a leaf project.
-  if (hasProjectTxt(absDir)) {
-    return {
-      type: "project",
-      name,
-      path: normalizeRelPath(relFromProjectsRoot),
-    };
-  }
+  const hasProjectMarker = hasProjectTxt(absDir);
+  const htmlEntryFile = pickHtmlEntryFile(absDir);
 
   const children = [];
   for (const sub of listSubDirs(absDir)) {
@@ -87,6 +121,36 @@ function buildNode(absDir, relFromProjectsRoot) {
     const childRel = path.join(relFromProjectsRoot, sub);
     const childNode = buildNode(childAbs, childRel);
     if (childNode) children.push(childNode);
+  }
+
+  if (hasProjectMarker && children.length > 0) {
+    children.sort((a, b) => a.name.localeCompare(b.name, "zh-Hans-CN"));
+    return {
+      type: "folder",
+      name,
+      path: normalizeRelPath(relFromProjectsRoot),
+      children,
+      projectMarker: true,
+    };
+  }
+
+  if (hasProjectMarker || htmlEntryFile) {
+    const projectNode = {
+      type: "project",
+      name,
+      path: normalizeRelPath(relFromProjectsRoot),
+      detectedBy: hasProjectMarker ? "project.txt" : "html-entry",
+      projectFiles: listProjectFiles(absDir),
+    };
+
+    if (htmlEntryFile) {
+      return {
+        ...projectNode,
+        autoDemoUrl: toProjectSourceUrl(path.join(relFromProjectsRoot, htmlEntryFile)),
+      };
+    }
+
+    return projectNode;
   }
 
   if (children.length === 0) return null;

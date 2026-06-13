@@ -8,7 +8,12 @@
 - 它不是手写的，而是由脚本 `scripts/build-project-tree.mjs` 生成
 - **脚本默认会扫描同级仓库 `ComplexSystemLab` 的 `ComplexSystemLab/Projects`**
 - 判定“叶子项目”的标准：目录下存在 `project.txt`
-- `package.json` 的 `predev`/`prebuild` 会在启动/构建前自动执行 `pnpm gen:tree`
+- 前端运行时是 Vue 3，但工作台壳来自 `main-ui`，中间概览视口来自 `viewport-2d-kit`
+- `package.json` 的 `predev`/`prebuild` 会在启动/构建前自动执行：
+  - `pnpm build:deps`
+  - `pnpm sync:demo-vendor`
+  - `pnpm gen:tree`
+- graph_algorithms_js demo 不再依赖外网 CDN，而是使用 `public/vendor/p5.min.js`
 
 ## 0.1 文档体系与维护要求（重要）
 
@@ -47,8 +52,10 @@ pnpm dev
 
 等价流程：
 
-1. `predev`：`pnpm gen:tree`（生成 `public/projects-tree.json`）
+1. `predev`：`pnpm build:deps && pnpm sync:demo-vendor && pnpm gen:tree`
 2. `dev`：`vite`
+
+默认地址：`http://127.0.0.1:4173/`
 
 ### 2.2 构建
 
@@ -58,8 +65,8 @@ pnpm build
 
 等价流程：
 
-1. `prebuild`：`pnpm gen:tree`
-2. `build`：`tsc -b && vite build`
+1. `prebuild`：`pnpm build:deps && pnpm sync:demo-vendor && pnpm gen:tree`
+2. `build`：`vue-tsc -b && vite build`
 
 ### 2.3 预览
 
@@ -67,28 +74,51 @@ pnpm build
 pnpm preview
 ```
 
+默认地址：`http://127.0.0.1:4174/`
+
 ### 2.4 代码检查
 
 ```powershell
 pnpm lint
 ```
 
+### 2.5 基础包与 Demo 资源同步
+
+```powershell
+pnpm build:deps
+pnpm sync:demo-vendor
+```
+
+- `build:deps` 会预构建 `../main-ui` 与 `../viewport-2d-kit`
+- `sync:demo-vendor` 会把 `node_modules/p5/lib/p5.min.js` 复制到 `public/vendor/p5.min.js`
+
 ## 3. 工程结构与模块职责
 
-> 以下是从当前仓库结构推断出的职责划分（以实际代码为准）。
+当前职责划分如下：
 
-- `src/main.tsx`
-  - React 应用入口，渲染 `<Router />`
-- `src/Router.tsx`
-  - 顶层路由/布局容器（**当前文件为空**，需要你实现）
-- `src/components/ProjectTree.tsx`
-  - 项目树 UI 组件
-  - 通过 `onSelectProject(projectPath)` 向外通知选中项目
-  - 用 `selectedPath` 高亮当前选中项
+- `src/main.ts`
+  - Vue 应用入口
+- `src/App.vue`
+  - 挂载 `MainUiProvider` 和 `WorkbenchShell`
+- `src/runtime/createGalleryRuntime.ts`
+  - 注册 Gallery 工作区与默认编辑器
+- `src/workbench/GalleryWorkbenchEditor.vue`
+  - 主项目浏览器
+  - 左侧树、中央 2D 概览、右侧 demo 预览都在这里组合
+- `src/components/ProjectTreeNodeItem.vue`
+  - 递归项目树节点组件
+- `src/projects/projectRegistry.ts`
+  - 项目注册表：维护标题、分类、标签、说明和 `demoUrl`
 - `src/types/projectTree.ts`
-  - 项目树节点类型（如 `ProjectTreeNode`）
+  - 项目树节点类型
+- `scripts/build-project-tree.mjs`
+  - 从 Lab 扫描 `Projects` 并生成 `public/projects-tree.json`
+- `scripts/sync-demo-vendor.mjs`
+  - 同步本地 `p5.min.js` 到 `public/vendor/`
 - `public/projects-tree.json`
   - 由 `gen:tree` 生成的项目树数据
+- `public/vendor/p5.min.js`
+  - graph_algorithms_js demo 使用的本地 p5 运行时
 
 ## 4. 项目树生成脚本（build-project-tree）
 
@@ -117,19 +147,30 @@ pnpm lint
 - 修改 `scripts/build-project-tree.mjs` 的 `LAB_PROJECTS_ROOT`
 - 或者把路径改为从环境变量读取（可选增强：比如 `PROJECTS_ROOT`）
 
-## 5. 路由/页面层的集成方式（建议）
+## 5. 当前页面结构与扩展方式
 
-由于 `src/Router.tsx` 当前为空，这里给出推荐的实现思路，方便后续扩展：
+当前前端不再使用单独的 React 路由页面，而是使用一个单编辑器的 Vue3 工作台：
 
-- 启动时 fetch `public/projects-tree.json`
-- 渲染 `ProjectTree` 作为侧边栏
-- 当用户选择某个 `projectPath`：
-  - 方式 A：用 URL hash（`#/path`）或 query（`?project=...`）保存状态
-  - 方式 B：使用 `react-router`（需要额外引入依赖）
-- 主内容区：
-  - 最简单：展示一个“占位页/说明页”，或把某些 known demo（如 `public/demos/*`）用 `<iframe>` 嵌入
+1. 左侧：项目树与目录统计信息
+2. 中间：由 `Viewport2D` 渲染的项目概览视口
+3. 右侧：项目说明、标签和 live demo iframe
 
-> 备注：仓库里存在 `public/demos/graph_algorithms_js/*`，很适合先用 iframe 打通一个端到端的展示闭环。
+当前 URL 约定：
+
+- `/`：总览态
+- `/project?path=...`：某个已选择项目的固定链接
+
+如果需要接入新项目：
+
+1. 确认 Lab 目录里存在 `project.txt`
+2. 让 `pnpm gen:tree` 能扫描到该目录
+3. 在 `src/projects/projectRegistry.ts` 中补充：
+   - `projectPath`
+   - `title`
+   - `description`
+   - `category`
+   - `badges`
+   - `demoUrl`（如果可预览）
 
 ## 6. 常见问题排查
 
@@ -153,6 +194,27 @@ pnpm lint
 
 - 手动执行 `pnpm gen:tree`
 - 刷新页面
+
+### 6.3 graph_algorithms_js demo 打不开或报 `window.p5 is not a constructor`
+
+原因：本地 `p5.min.js` 没有同步到 `public/vendor/`。
+
+处理：
+
+- 先执行 `pnpm install`
+- 再执行 `pnpm sync:demo-vendor`
+- 重启 `pnpm dev`
+
+### 6.4 浏览器打开的不是本仓库页面
+
+原因：同工作区内其他 Vite 项目可能占用了默认端口。
+
+当前仓库已固定：
+
+- 开发：`127.0.0.1:4173`
+- 预览：`127.0.0.1:4174`
+
+如果仍然冲突，Vite 会因为 `strictPort` 直接报错，此时先释放端口再启动。
 
 ## 7. 低风险增强建议（可选）
 

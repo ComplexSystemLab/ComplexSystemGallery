@@ -1,8 +1,10 @@
 # ComplexSystemGallery
 
-一个基于 **Vite + React + TypeScript** 的“项目画廊”站点。
+一个基于 **Vite + Vue 3 + TypeScript** 的“项目画廊”工作台。
 
 它会在启动/构建前从同级仓库 **ComplexSystemLab** 的 `Projects/` 目录扫描项目结构，并生成 `public/projects-tree.json`，然后在网页里以“项目树”方式进行导航与展示。
+
+当前界面以 `main-ui` 作为工作台壳，使用 `viewport-2d-kit` 承载中间的项目概览视口，右侧展示已注册项目的 live demo iframe。
 
 > 说明：本仓库默认假设 `ComplexSystemGallery` 与 `ComplexSystemLab` 在同一个父目录下（脚本会去 `../ComplexSystemLab/ComplexSystemLab/Projects` 查找）。
 
@@ -21,7 +23,10 @@
 ## 主要特性
 
 - 自动生成项目树（`public/projects-tree.json`）
-- 左侧/页面内项目树导航（`src/components/ProjectTree.tsx`）
+- 基于 `main-ui` 的单工作区项目浏览器
+- 左侧项目树导航、中间 2D 概览视口、右侧 demo 预览
+- 通过 `src/projects/projectRegistry.ts` 以数据方式注册可预览项目
+- 对 graph_algorithms_js demo 自动同步本地 `p5.min.js`，避免依赖外网 CDN
 - 支持按文件夹层级组织项目
 - 以 `project.txt` 作为“叶子项目”的判定标记（见 `scripts/build-project-tree.mjs`）
 
@@ -43,7 +48,11 @@ pnpm dev
 
 启动时会自动执行一次项目树生成：
 
+- `pnpm build:deps` → 构建 `../main-ui` 和 `../viewport-2d-kit`
+- `pnpm sync:demo-vendor` → 同步 `public/vendor/p5.min.js`
 - `pnpm gen:tree` → `scripts/build-project-tree.mjs` → 输出到 `public/projects-tree.json`
+
+默认开发地址：`http://127.0.0.1:4173/`
 
 ### 3) 构建与预览
 
@@ -52,9 +61,13 @@ pnpm build
 pnpm preview
 ```
 
+默认预览地址：`http://127.0.0.1:4174/`
+
 ## 常用脚本
 
 - `pnpm gen:tree`：生成/更新 `public/projects-tree.json`
+- `pnpm build:deps`：预构建 `main-ui` 与 `viewport-2d-kit`
+- `pnpm sync:demo-vendor`：同步本地 `p5.min.js` 到 `public/vendor/`
 - `pnpm dev`：开发模式（启动前自动 `gen:tree`）
 - `pnpm build`：TypeScript 构建（`tsc -b`）+ Vite 构建（构建前自动 `gen:tree`）
 - `pnpm lint`：ESLint 检查
@@ -80,9 +93,13 @@ pnpm preview
 
 ## 代码结构（摘要）
 
-- `src/main.tsx`：应用入口（渲染 `Router`）
-- `src/Router.tsx`：顶层路由组件（当前文件为空，需要按产品形态实现路由/布局）
-- `src/components/ProjectTree.tsx`：项目树 UI
+- `src/main.ts`：Vue 应用入口
+- `src/App.vue`：挂载 `main-ui` 工作台壳
+- `src/runtime/createGalleryRuntime.ts`：注册 Gallery 工作区与编辑器
+- `src/workbench/GalleryWorkbenchEditor.vue`：主项目浏览器，组合项目树、视口和 demo 预览
+- `src/components/ProjectTreeNodeItem.vue`：递归树节点组件
+- `src/projects/projectRegistry.ts`：项目注册表（标题、demoUrl、说明、标签）
+- `public/vendor/p5.min.js`：graph_algorithms_js demos 使用的本地 p5 资源
 - `src/types/projectTree.ts`：项目树节点类型
 - `public/projects-tree.json`：项目树数据（由脚本生成）
 
@@ -94,4 +111,8 @@ A：`gen:tree` 依赖同级仓库 `ComplexSystemLab`。请确保目录结构符�
 
 ### Q2：页面空白或无法导航
 
-A：当前 `src/Router.tsx` 文件为空。你需要实现路由/布局，把项目树与项目内容渲染出来。
+A：当前版本使用单工作区的 Vue3 工作台，不再依赖旧的 React 路由文件。如果页面异常，优先检查：
+
+1. `pnpm build:deps` 是否成功构建 `main-ui` 和 `viewport-2d-kit`
+2. `pnpm sync:demo-vendor` 是否生成了 `public/vendor/p5.min.js`
+3. 本地是否有其他 Vite 项目占用 4173；当前仓库已固定 `strictPort`，端口冲突会直接报错

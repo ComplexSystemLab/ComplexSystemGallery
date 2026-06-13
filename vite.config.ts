@@ -3,12 +3,19 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sirv from "sirv";
 import { defineConfig, type Plugin } from "vite";
-import react from "@vitejs/plugin-react";
+import vue from "@vitejs/plugin-vue";
 
 /**
  * `vite.config.ts` 所在目录（兼容 ESM：通过 `import.meta.url` 推导）。
  */
 const CONFIG_DIR = path.dirname(fileURLToPath(import.meta.url));
+const LAB_PROJECTS_ROOT = path.resolve(
+  CONFIG_DIR,
+  "..",
+  "ComplexSystemLab",
+  "ComplexSystemLab",
+  "Projects",
+);
 
 /**
  * 单个探索项目的静态 Demo 映射配置。
@@ -127,6 +134,23 @@ function projectDemosEmitPlugin(mappings: readonly ProjectDemoMapping[]): Plugin
 }
 
 /**
+ * 将外部 Lab Projects 目录挂载为只读静态资源，用于自动发现的 html 入口预览。
+ */
+function externalProjectsSourcePlugin(projectsRoot: string, urlPrefix = "/projects-src/"): Plugin {
+  return {
+    name: "external-projects-source",
+    configureServer(server) {
+      if (!fs.existsSync(projectsRoot)) return;
+      server.middlewares.use(urlPrefix, sirv(projectsRoot, { dev: true }));
+    },
+    configurePreviewServer(server) {
+      if (!fs.existsSync(projectsRoot)) return;
+      server.middlewares.use(urlPrefix, sirv(projectsRoot, { dev: false }));
+    },
+  };
+}
+
+/**
  * graph_algorithms_js 下三个探索项目的 Demo 映射。
  */
 const GRAPH_ALGORITHMS_DEMO_MAPPINGS: readonly ProjectDemoMapping[] = [
@@ -152,8 +176,23 @@ const GRAPH_ALGORITHMS_DEMO_MAPPINGS: readonly ProjectDemoMapping[] = [
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    host: "127.0.0.1",
+    port: 4173,
+    strictPort: true,
+  },
+  preview: {
+    host: "127.0.0.1",
+    port: 4174,
+    strictPort: true,
+  },
+  resolve: {
+    dedupe: ["vue"],
+    alias: [],
+  },
   plugins: [
-    react(),
+    vue(),
+    externalProjectsSourcePlugin(LAB_PROJECTS_ROOT),
     projectDemosPlugin(GRAPH_ALGORITHMS_DEMO_MAPPINGS),
     projectDemosEmitPlugin(GRAPH_ALGORITHMS_DEMO_MAPPINGS),
   ],

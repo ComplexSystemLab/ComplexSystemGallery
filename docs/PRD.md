@@ -6,7 +6,9 @@
 
 ## 1. 背景与目标
 
-ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目画廊”站点，用于把同级仓库 **ComplexSystemLab**（默认路径：`../ComplexSystemLab/ComplexSystemLab/Projects`）中的项目，以“项目树”的方式组织、导航和展示。
+ComplexSystemGallery 是一个基于 **Vite + Vue 3 + TypeScript** 的“项目画廊”工作台，用于把同级仓库 **ComplexSystemLab**（默认路径：`../ComplexSystemLab/ComplexSystemLab/Projects`）中的项目，以“项目树 + 2D 概览视口 + demo 预览”的方式组织、导航和展示。
+
+前端工作台壳使用 `main-ui`，项目概览视口使用 `viewport-2d-kit`。
 
 核心目标：
 
@@ -34,9 +36,9 @@ ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目�
 
 1. 打开站点，浏览左侧项目树。
 2. 搜索/展开树节点，定位到某个项目。
-3. 点击项目，进入项目页：
-   - 若项目已注册：展示项目页 UI（可能含 iframe、React 交互组件等）。
-   - 若项目未注册：展示“未实现/未展示”的提示。
+3. 点击项目后，工作台会切换到该项目的固定链接，并同步更新中间概览与右侧预览：
+  - 若项目已注册：展示项目说明、状态卡片和 iframe demo。
+  - 若项目未注册：展示“未接入 demoUrl”的提示。
 4. 给 Lab 新增一个项目目录并添加 `project.txt`。
 5. 启动/构建 Gallery，自动重新生成项目树并在页面里可见。
 
@@ -45,9 +47,12 @@ ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目�
 ### 4.1 In Scope（本期必须）
 
 - 启动与构建前自动生成项目树（`predev`/`prebuild`）。
+- 启动与构建前自动构建本地基础包（`main-ui`、`viewport-2d-kit`）。
+- 启动与构建前自动同步 graph_algorithms_js demo 所需的本地 `p5.min.js`。
 - 项目树数据落盘为 `public/projects-tree.json`，前端加载并渲染。
 - 项目树支持文件夹/项目两种节点。
 - 支持忽略常见无关目录（`node_modules`、`.git` 等）。
+- 使用统一工作台壳浏览项目，而不是散落的单页原型。
 - 提供开发者文档、用户手册、开发日志与 PRD。
 
 ### 4.2 Out of Scope（本期不做/可选）
@@ -75,20 +80,20 @@ ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目�
 
 ### FR-02 前端渲染项目树
 
-- 前端读取 `public/projects-tree.json` 并渲染为树形导航。
+- 前端读取 `public/projects-tree.json` 并在工作台左侧渲染为树形导航。
 - 可展开/折叠文件夹节点。
-- 点击叶子项目节点后，触发项目页展示。
+- 点击叶子项目节点后，URL 切换到 `/project?path=...`，并同步更新视口和右侧预览面板。
 
 验收标准：
 
-- 页面可见树结构，并能正确触发选择。
+- 页面可见树结构，并能正确触发选择与固定链接更新。
 
 ### FR-03 项目页渲染与注册机制
 
-- Gallery 内部可以对项目路径进行“注册”，为该项目提供标题与渲染函数。
+- Gallery 内部可以对项目路径进行“注册”，为该项目提供标题、说明、分类、标签与 `demoUrl`。
 - 对于未注册项目：
   - 仍可在树中显示（是否显示由开关控制）。
-  - 点击后显示“未实现/未展示”提示。
+  - 点击后显示“未接入 demoUrl”提示。
 
 相关实现参考：
 
@@ -96,10 +101,21 @@ ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目�
 
 验收标准：
 
-- 已注册项目可显示自定义渲染内容。
+- 已注册项目可显示概览信息与 iframe demo。
 - 未注册项目点击后有明确提示。
 
-### FR-04 文档体系
+### FR-04 工作台与视口结构
+
+- 前端使用 `main-ui` 作为工作台壳。
+- 中间主区域使用 `viewport-2d-kit` 提供项目概览视口。
+- 右侧面板显示项目路径、标签、说明与 live demo。
+
+验收标准：
+
+- 页面具备左树、中间视口、右预览的稳定三栏结构。
+- 视口与右侧预览会随当前项目选择同步更新。
+
+### FR-05 文档体系
 
 - `docs/PRD.md`：产品需求文档。
 - `docs/USER_MANUAL.md`：产品用户手册。
@@ -116,9 +132,11 @@ ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目�
 ## 6. 非功能需求（Non-functional Requirements）
 
 - **可维护性**：脚本/前端逻辑清晰，文档齐全。
+- **可调试性**：默认开发端口固定为 `127.0.0.1:4173`，避免在多项目工作区中命中错误服务。
 - **可移植性**：默认依赖同级 Lab，但允许通过改脚本或环境变量方式适配（可选增强）。
 - **性能**：项目树生成应能应对中等规模目录（数千节点）且在可接受时间内完成。
 - **可靠性**：Projects 根目录不存在时，错误信息清晰，可指引解决。
+- **离线/受限网络可用性**：graph_algorithms_js demos 不依赖外网 CDN 即可运行。
 
 ## 7. 风险与对策
 
@@ -130,6 +148,6 @@ ComplexSystemGallery 是一个基于 **Vite + React + TypeScript** 的“项目�
 ## 8. 里程碑（建议）
 
 - M1：文档补齐（PRD/用户手册/开发日志）
-- M2：路由/布局完善（当前 `src/Router.tsx` 仍需实现/确认）
-- M3：更多项目页注册与 Demo 承载方式沉淀（iframe/React component 规范化）
+- M2：工作台壳、项目树、视口和 demo 预览打通
+- M3：更多项目注册与 demo 承载方式沉淀（iframe/自定义 renderer 规范化）
 

@@ -5,18 +5,41 @@
   "children": [
     {
       "type": "project",
-      "name": "生成2D随机可通地形地图",
-      "path": "生成2D随机可通地形地图"
+      "name": "academic_workflow",
+      "path": "academic_workflow",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "project.txt",
+        "README.md"
+      ]
     },
     {
       "type": "project",
       "name": "cascade_reaction",
-      "path": "cascade_reaction"
+      "path": "cascade_reaction",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "_quarto.yml",
+        "cascade_reaction.html",
+        "cascade_reaction.ipynb",
+        "cascade_reaction.jl",
+        "cascade_reaction.qmd",
+        "project.txt"
+      ],
+      "autoDemoUrl": "/projects-src/cascade_reaction/cascade_reaction.html"
     },
     {
       "type": "project",
       "name": "cascading_failures",
-      "path": "cascading_failures"
+      "path": "cascading_failures",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "_quarto.yml",
+        "cascading_failures.html",
+        "cascading_failures.ipynb",
+        "project.txt"
+      ],
+      "autoDemoUrl": "/projects-src/cascading_failures/cascading_failures.html"
     },
     {
       "type": "folder",
@@ -26,8 +49,37 @@
         {
           "type": "project",
           "name": "art_of_diplomatic_v1.0",
-          "path": "Diplomatic/art_of_diplomatic_v1.0"
+          "path": "Diplomatic/art_of_diplomatic_v1.0",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "_quarto.yml",
+            "art_of_diplomatic_v1_模型1.ipynb",
+            "art_of_diplomatic_v1_模型2.ipynb",
+            "art_of_diplomatic_v1_模型3.ipynb",
+            "art_of_diplomatic_v1_模型4.ipynb",
+            "art_of_diplomatic_v1_model1_algorithms.py",
+            "art_of_diplomatic_v1_model2_algorithms.py",
+            "art_of_diplomatic_v1_model3_algorithms.py",
+            "art_of_diplomatic_v1.0_jullia.ipynb",
+            "art_of_diplomatic_v1.0.html",
+            "art_of_diplomatic_v1.0.jl",
+            "art_of_diplomatic_v1.0.qmd",
+            "art_of_diplomatic_v2.0.ipynb",
+            "project.txt",
+            "README.md"
+          ],
+          "autoDemoUrl": "/projects-src/Diplomatic/art_of_diplomatic_v1.0/art_of_diplomatic_v1.0.html"
         }
+      ]
+    },
+    {
+      "type": "project",
+      "name": "ECS",
+      "path": "ECS",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "project.txt",
+        "README.md"
       ]
     },
     {
@@ -38,24 +90,96 @@
         {
           "type": "project",
           "name": "3_elements_reaction",
-          "path": "elements_interaction/3_elements_reaction"
+          "path": "elements_interaction/3_elements_reaction",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "_quarto.yml",
+            "石头剪刀布.mp4",
+            "event_rock_paper_scissors.jl",
+            "project.txt",
+            "README.md"
+          ]
         },
         {
           "type": "project",
           "name": "elements_reaction_dynamic_system",
-          "path": "elements_interaction/elements_reaction_dynamic_system"
+          "path": "elements_interaction/elements_reaction_dynamic_system",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "_quarto.yml",
+            "elements_reaction_dynamic_system.ipynb",
+            "elements_reaction_dynamic_system.qmd",
+            "index.qmd",
+            "project.txt",
+            "README.md",
+            "references.bib"
+          ]
         },
         {
           "type": "project",
           "name": "particle_interaction",
-          "path": "elements_interaction/particle_interaction"
+          "path": "elements_interaction/particle_interaction",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "_quarto.yml",
+            "main.jl",
+            "project.txt"
+          ]
         }
       ]
     },
     {
       "type": "project",
+      "name": "finite-state-machine",
+      "path": "finite-state-machine",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "main.py",
+        "project.txt"
+      ]
+    },
+    {
+      "type": "project",
+      "name": "generate_map",
+      "path": "generate_map",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "project.txt"
+      ]
+    },
+    {
+      "type": "project",
       "name": "generate_traffic_network",
-      "path": "generate_traffic_network"
+      "path": "generate_traffic_network",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "根据底图绘制网络图数据.py",
+        "基于黏菌算法生成交通网络.ipynb",
+        "基于黏菌算法生成交通网络.jl",
+        "基于黏菌算法生成交通网络.py",
+        "project.txt"
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "graph_algorithms",
+      "path": "graph_algorithms",
+      "children": [
+        {
+          "type": "project",
+          "name": "viz",
+          "path": "graph_algorithms/viz",
+          "detectedBy": "html-entry",
+          "projectFiles": [
+            "algorithms.bundle.js",
+            "algorithms.mjs",
+            "app.js",
+            "index.html",
+            "README.md"
+          ],
+          "autoDemoUrl": "/projects-src/graph_algorithms/viz/index.html"
+        }
+      ]
     },
     {
       "type": "folder",
@@ -70,19 +194,45 @@
             {
               "type": "project",
               "name": "block_connectivity",
-              "path": "graph_algorithms-js/projects/block_connectivity"
+              "path": "graph_algorithms-js/projects/block_connectivity",
+              "detectedBy": "project.txt",
+              "projectFiles": [
+                "project.txt"
+              ]
             },
             {
               "type": "project",
               "name": "graph_connectivity",
-              "path": "graph_algorithms-js/projects/graph_connectivity"
+              "path": "graph_algorithms-js/projects/graph_connectivity",
+              "detectedBy": "project.txt",
+              "projectFiles": [
+                "project.txt"
+              ]
             },
             {
               "type": "project",
               "name": "poisson_disk",
-              "path": "graph_algorithms-js/projects/poisson_disk"
+              "path": "graph_algorithms-js/projects/poisson_disk",
+              "detectedBy": "project.txt",
+              "projectFiles": [
+                "project.txt"
+              ]
             }
           ]
+        },
+        {
+          "type": "project",
+          "name": "viz",
+          "path": "graph_algorithms-js/viz",
+          "detectedBy": "html-entry",
+          "projectFiles": [
+            "algorithms.bundle.js",
+            "algorithms.mjs",
+            "app.js",
+            "index.html",
+            "README.md"
+          ],
+          "autoDemoUrl": "/projects-src/graph_algorithms-js/viz/index.html"
         }
       ]
     },
@@ -94,46 +244,151 @@
         {
           "type": "project",
           "name": "《自然规律支配偶然性》_jl",
-          "path": "grid_evoluation/《自然规律支配偶然性》_jl"
+          "path": "grid_evoluation/《自然规律支配偶然性》_jl",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "main.jl",
+            "project.txt"
+          ]
         },
         {
-          "type": "project",
+          "type": "folder",
           "name": "《自然规律支配偶然性》_js",
-          "path": "grid_evoluation/《自然规律支配偶然性》_js"
+          "path": "grid_evoluation/《自然规律支配偶然性》_js",
+          "children": [
+            {
+              "type": "project",
+              "name": "迷向飞行",
+              "path": "grid_evoluation/《自然规律支配偶然性》_js/迷向飞行",
+              "detectedBy": "html-entry",
+              "projectFiles": [
+                "index_p5_image.html",
+                "index_p5.html",
+                "index_pixi.html",
+                "index_q5.html",
+                "script_p5_image.js",
+                "script_p5.js",
+                "script_pixi.js",
+                "script_q5.js"
+              ],
+              "autoDemoUrl": "/projects-src/grid_evoluation/《自然规律支配偶然性》_js/迷向飞行/index_p5.html"
+            }
+          ],
+          "projectMarker": true
         },
         {
           "type": "project",
           "name": "《自然规律支配偶然性》_MATLAB",
-          "path": "grid_evoluation/《自然规律支配偶然性》_MATLAB"
+          "path": "grid_evoluation/《自然规律支配偶然性》_MATLAB",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "Balance.m",
+            "ComplexElementsGame_MATLAB.code-workspace",
+            "fun_Balance.m",
+            "fun_RandomFly.m",
+            "main.m",
+            "playerColorNames.mat",
+            "playRules.mat",
+            "project.txt",
+            "RandomFly.m"
+          ]
         },
         {
           "type": "project",
           "name": "《自然规律支配偶然性》_py",
-          "path": "grid_evoluation/《自然规律支配偶然性》_py"
+          "path": "grid_evoluation/《自然规律支配偶然性》_py",
+          "detectedBy": "project.txt",
+          "projectFiles": [
+            "Balance.py",
+            "fun_Balance.py",
+            "main.py",
+            "project.txt",
+            "RandomFly.py"
+          ]
         }
       ]
     },
     {
       "type": "project",
       "name": "hierarchical_traffic_network",
-      "path": "hierarchical_traffic_network"
+      "path": "hierarchical_traffic_network",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "_quarto.yml",
+        "预寻路简易的分级道路交通网络地图.py",
+        "generate_simple_hierarchical_road_traffic_network_map.jl",
+        "generate_simple_hierarchical_road_traffic_network_map.py",
+        "project.txt"
+      ]
+    },
+    {
+      "type": "project",
+      "name": "math_symbolic_computation",
+      "path": "math_symbolic_computation",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "数学符号计算",
+        "MathSymbolicComputationEngine",
+        "project.txt"
+      ]
     },
     {
       "type": "project",
       "name": "navigation",
-      "path": "navigation"
+      "path": "navigation",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "index.html",
+        "package.json",
+        "pnpm-lock.yaml",
+        "project.txt"
+      ],
+      "autoDemoUrl": "/projects-src/navigation/index.html"
     },
     {
       "type": "project",
       "name": "navigation_and_pathfinding",
-      "path": "navigation_and_pathfinding"
+      "path": "navigation_and_pathfinding",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "project.txt",
+        "script_p5.js",
+        "script_phaser.js"
+      ]
     },
     {
       "type": "project",
       "name": "navigation-html-js",
-      "path": "navigation-html-js"
+      "path": "navigation-html-js",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "index.html",
+        "project.txt",
+        "script_p5.js",
+        "script_phaser.js",
+        "style.css",
+        "test.js",
+        "visibility_pathfinding_flow.md",
+        "visibility_pathfinding.js"
+      ],
+      "autoDemoUrl": "/projects-src/navigation-html-js/index.html"
+    },
+    {
+      "type": "project",
+      "name": "symbolic_computation_engine",
+      "path": "symbolic_computation_engine",
+      "detectedBy": "project.txt",
+      "projectFiles": [
+        "论符号计算系统.aux",
+        "论符号计算系统.log",
+        "论符号计算系统.out",
+        "论符号计算系统.pdf",
+        "论符号计算系统.synctex.gz",
+        "论符号计算系统.toc",
+        "project.txt"
+      ]
     }
   ],
-  "generatedAt": "2026-01-02T14:02:52.524Z",
+  "generatedAt": "2026-05-18T07:42:25.313Z",
   "source": "ComplexSystemLab/ComplexSystemLab/Projects"
 }

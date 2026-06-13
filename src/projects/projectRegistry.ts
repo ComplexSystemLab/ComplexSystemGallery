@@ -1,14 +1,4 @@
 import type { ProjectTree, ProjectTreeNode } from "../types/projectTree";
-import type React from "react";
-import { getGraphAlgorithmsProjectEntry } from "./graph_algorithms_js/projectRegistry";
-
-/**
- * 项目页渲染上下文。
- */
-export type ProjectRenderContext = {
-  /** 项目路径（相对 `Projects` 根目录）。 */
-  projectPath: string;
-};
 
 /**
  * Gallery 内部注册的“可展示项目”。
@@ -20,9 +10,49 @@ export type GalleryProjectEntry = {
   title: string;
   /** 是否在项目树中展示该项目。 */
   visibleInTree: boolean;
-  /** 渲染项目交互界面。 */
-  render: (ctx: ProjectRenderContext) => React.ReactNode;
+  /** 预览 demo URL。 */
+  demoUrl?: string;
+  /** 项目简介。 */
+  description: string;
+  /** 项目类别。 */
+  category: string;
+  /** 辅助标签。 */
+  badges: string[];
 };
+
+const GALLERY_PROJECT_ENTRIES: readonly GalleryProjectEntry[] = [
+  {
+    projectPath: "graph_algorithms-js/projects/block_connectivity",
+    title: "block_connectivity（方块连通性）",
+    visibleInTree: true,
+    demoUrl: "/demos/graph_algorithms_js/block_connectivity/index.html",
+    description: "通过离散方块场景展示连通分量识别，适合作为图算法与网格判连的基础演示。",
+    category: "Graph Algorithms",
+    badges: ["demo", "connected-components", "grid"],
+  },
+  {
+    projectPath: "graph_algorithms-js/projects/graph_connectivity",
+    title: "graph_connectivity（图连通性）",
+    visibleInTree: true,
+    demoUrl: "/demos/graph_algorithms_js/graph_connectivity/index.html",
+    description: "以节点和边的形式展示图连通性分析，可用于快速验证图遍历与分量划分逻辑。",
+    category: "Graph Algorithms",
+    badges: ["demo", "graph", "connectivity"],
+  },
+  {
+    projectPath: "graph_algorithms-js/projects/poisson_disk",
+    title: "poisson_disk（泊松圆盘采样）",
+    visibleInTree: true,
+    demoUrl: "/demos/graph_algorithms_js/poisson_disk/index.html",
+    description: "展示 Poisson disk 采样的生成过程，适合作为空间采样、布局与可视化算法的演示底板。",
+    category: "Sampling",
+    badges: ["demo", "sampling", "visualization"],
+  },
+];
+
+const GALLERY_PROJECT_ENTRY_MAP: Readonly<Record<string, GalleryProjectEntry>> = Object.fromEntries(
+  GALLERY_PROJECT_ENTRIES.map((entry) => [entry.projectPath, entry]),
+);
 
 /**
  * 是否在树中展示“未注册项目”。
@@ -33,13 +63,35 @@ export type GalleryProjectEntry = {
 export const SHOW_UNREGISTERED_PROJECTS_IN_TREE = true;
 
 /**
+ * 获取所有注册项目。
+ */
+export function listGalleryProjectEntries(): GalleryProjectEntry[] {
+  return [...GALLERY_PROJECT_ENTRIES];
+}
+
+/**
  * 读取某个项目的注册信息。
  *
  * @param projectPath 项目路径（相对 `Projects` 根目录）。
  * @returns 注册信息；如果未注册则返回 `null`。
  */
 export function getGalleryProjectEntry(projectPath: string): GalleryProjectEntry | null {
-  return getGraphAlgorithmsProjectEntry(projectPath);
+  return GALLERY_PROJECT_ENTRY_MAP[projectPath] ?? null;
+}
+
+/**
+ * 获取项目显示标题；未注册时对路径名做可读化处理。
+ */
+export function getProjectDisplayTitle(projectPath: string): string {
+  const entry = getGalleryProjectEntry(projectPath);
+  if (entry) return entry.title;
+
+  const segment = projectPath.split("/").filter(Boolean).at(-1) ?? projectPath;
+  return segment
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 /**

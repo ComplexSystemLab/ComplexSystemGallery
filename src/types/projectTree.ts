@@ -13,10 +13,14 @@ export type ProjectTreeNode =
       name: string;
       path: string;
       children: ProjectTreeNode[];
+      projectMarker?: boolean;
     }
   | {
       type: "project";
       name: string;
       path: string;
+      autoDemoUrl?: string;
+      detectedBy?: "project.txt" | "html-entry";
+      projectFiles?: string[];
     };
 
