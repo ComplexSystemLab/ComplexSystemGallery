@@ -1,0 +1,47 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #13213c;
+  background:
+    radial-gradient(circle at top left, rgba(248, 231, 199, 0.9) 0, transparent 34%),
+    radial-gradient(circle at bottom right, rgba(190, 217, 255, 0.9) 0, transparent 38%),
+    #eef2f7;
+  --main-ui-font: "Bahnschrift", "Segoe UI Variable Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --main-ui-bg: rgba(239, 243, 249, 0.88);
+  --main-ui-panel: rgba(255, 255, 255, 0.92);
+  --main-ui-panel-muted: rgba(244, 247, 252, 0.92);
+  --main-ui-border: rgba(17, 24, 39, 0.1);
+  --main-ui-text: #13213c;
+  --main-ui-text-muted: #5e6b7f;
+  --main-ui-accent: #0c5f9f;
+  --main-ui-accent-strong: #0f4c81;
+  --main-ui-focus-ring: #2f7fd1;
+  --main-ui-status-bg: #0f4c81;
+  --main-ui-status-text: #ffffff;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}

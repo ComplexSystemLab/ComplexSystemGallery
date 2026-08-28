@@ -1,0 +1,239 @@
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.app-shell {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.app-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.app-subtitle {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.78;
+}
+
+.app-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+  padding: 12px;
+  min-height: 0;
+}
+
+.left-pane,
+.right-pane {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px;
+}
+
+.pane-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tree-hint {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tree-hint-label {
+  opacity: 0.8;
+}
+
+.tree-hint-sep {
+  opacity: 0.5;
+  padding: 0 4px;
+}
+
+.tree-root {
+  font-size: 13px;
+}
+
+.tree-details {
+  margin: 0;
+}
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  line-height: 28px;
+  border-radius: 8px;
+}
+
+.tree-folder {
+  cursor: pointer;
+  user-select: none;
+  padding-right: 8px;
+}
+
+.tree-folder:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tree-project {
+  padding-right: 8px;
+}
+
+.tree-project.is-selected .tree-button {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.tree-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  line-height: 28px;
+  border-radius: 8px;
+}
+
+.tree-button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tree-icon {
+  width: 18px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.tree-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-meta {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.error-box {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.12);
+  border: 1px solid rgba(255, 0, 0, 0.25);
+  margin-bottom: 10px;
+}
+
+.loading-box {
+  opacity: 0.8;
+  padding: 6px 0;
+}
+
+.detail-box {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.detail-box.muted {
+  opacity: 0.75;
+}
+
+.detail-label {
+  margin-bottom: 8px;
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.detail-path {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.detail-actions {
+  margin-top: 10px;
+}
+
+.mini-btn {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mini-btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.detail-note {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.5;
+}
