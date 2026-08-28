@@ -11,10 +11,12 @@ const props = withDefaults(
     node: ProjectTreeNode;
     depth?: number;
     selectedPath?: string | null;
+    expandDepth?: number;
   }>(),
   {
     depth: 0,
     selectedPath: null,
+    expandDepth: 1,
   },
 );
 
@@ -31,7 +33,7 @@ function hasSelectedDescendant(node: ProjectTreeNode, selectedPath: string | nul
 
 const isFolderOpen = computed(() => {
   if (props.node.type === "project") return false;
-  return props.depth < 1 || hasSelectedDescendant(props.node, props.selectedPath);
+  return props.depth < props.expandDepth || hasSelectedDescendant(props.node, props.selectedPath);
 });
 
 const isSelected = computed(() => props.node.type === "project" && props.node.path === props.selectedPath);
@@ -82,6 +84,7 @@ const isFolderSelected = computed(
         :node="child"
         :depth="depth + 1"
         :selected-path="selectedPath"
+        :expand-depth="expandDepth"
         @select="emit('select', $event)"
         @select-folder="emit('selectFolder', $event)"
       />

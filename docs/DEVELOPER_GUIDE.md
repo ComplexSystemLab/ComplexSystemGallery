@@ -101,14 +101,21 @@ pnpm sync:demo-vendor
 - `src/App.vue`
   - 挂载 `MainUiProvider` 和 `WorkbenchShell`
 - `src/runtime/createGalleryRuntime.ts`
-  - 注册 Gallery 工作区与默认编辑器
+  - 注册 Gallery 工作区、默认编辑器与设置编辑器
+  - 注册命令（刷新项目树 / 回到总览 / 重置布局）与 `Cmd/Ctrl+R` 快捷键
+  - 注册菜单栏入口与 Gallery 设置项（`gallery.showUnregisteredProjects`、`gallery.treeExpandDepth`）
 - `src/workbench/GalleryWorkbenchEditor.vue`
   - 主项目浏览器
   - 左侧树、中央 2D 概览、右侧 demo 预览都在这里组合
+  - 消费 `main-ui` 设置项并响应命令事件（刷新 / 回到总览）
+- `src/workbench/GallerySettingsEditor.vue`
+  - Gallery 设置面板，包装 `main-ui` 的 `SettingsEditor` 组件
 - `src/components/ProjectTreeNodeItem.vue`
   - 递归项目树节点组件
+  - 支持通过 `expand-depth` 控制默认展开层级
 - `src/projects/projectRegistry.ts`
   - 项目注册表：维护标题、分类、标签、说明和 `demoUrl`
+  - `filterProjectTreeForGallery` 支持按“是否展示未注册项目”动态过滤
 - `src/types/projectTree.ts`
   - 项目树节点类型
 - `scripts/build-project-tree.mjs`

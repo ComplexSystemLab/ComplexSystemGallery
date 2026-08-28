@@ -7,9 +7,19 @@
 ### Changed
 
 - 将前端栈从 React 迁移为 Vue 3，并以 `main-ui` 作为工作台壳、`viewport-2d-kit` 作为项目概览视口基础层。
+- **适配 `main-ui` 0.1.0**（兼容式能力扩展）：升级 workbench 持久化键到 `v3`，接入命令面板/菜单栏/快捷键/设置中心等新增能力（详见下方 Added）。
 - 重写项目浏览页为单工作区工作台：左侧项目树、中间 2D 概览、右侧 demo 预览与固定链接同步。
 - 将项目注册从 React 渲染函数改为纯数据注册表，集中维护标题、说明、分类、标签和 `demoUrl`。
 - 将开发端口固定为 `127.0.0.1:4173`，预览端口固定为 `127.0.0.1:4174`，避免多项目工作区冲突。
+
+### Added
+
+- 适配 `main-ui` 0.1.0 新增能力：
+  - 注册 `gallery-settings` 编辑器（modal overlay），通过 `SettingsEditor` 可视化编辑 Gallery 设置。
+  - 注册设置项 `gallery.showUnregisteredProjects`（是否展示未注册项目）与 `gallery.treeExpandDepth`（树默认展开层级），并用 localStorage 持久化设置。
+  - 注册命令 `gallery.refreshTree`、`gallery.goHome`、`gallery.resetLayout`，并接入菜单栏与 `Cmd/Ctrl+R` 刷新快捷键。
+  - 项目树默认展开层级从硬编码改为由设置项驱动，且支持设置修改后即时刷新树。
+  - `filterProjectTreeForGallery` 增加可选的过滤选项，支持按“是否展示未注册项目”动态过滤。
 
 ### Fixed
 

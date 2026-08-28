@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
 import type { EditorRenderContext, JsonObject } from "main-ui/core";
+import { useWorkbench } from "main-ui/vue";
 import { ViewportBusinessCanvasShell } from "viewport-2d-kit/vue";
 import ProjectTreeNodeItem from "../components/ProjectTreeNodeItem.vue";
 import {
@@ -28,12 +29,18 @@ const props = defineProps<{
   context: EditorRenderContext;
 }>();
 
+const { runtime } = useWorkbench();
+
+const rawTree = shallowRef<ProjectTree | null>(null);
 const tree = shallowRef<ProjectTree | null>(null);
+const showUnregistered = ref(true);
+const expandDepth = ref(1);
 const error = ref<string | null>(null);
 const isLoading = ref(false);
 const selectedProjectPath = ref<string | null>(parseRoute(window.location).projectPath);
 
 let activeRequest: AbortController | null = null;
+let unsubscribeSettings: (() => void) | undefined;
 
 function parseRoute(location: Location): GalleryRoute {
   if (location.pathname === "/project") {
@@ -106,7 +113,8 @@ async function loadTree(): Promise<void> {
 
     const payload = (await response.json()) as ProjectTree;
     if (controller.signal.aborted) return;
-    tree.value = filterProjectTreeForGallery(payload);
+    rawTree.value = payload;
+    tree.value = filterProjectTreeForGallery(payload, { showUnregistered: showUnregistered.value });
   } catch (cause) {
     if (controller.signal.aborted) return;
     tree.value = null;
@@ -120,6 +128,53 @@ async function loadTree(): Promise<void> {
 
 function handlePopstate(): void {
   selectedProjectPath.value = parseRoute(window.location).projectPath;
+}
+
+/**
+ * 从 main-ui settings 读取当前配置并应用到本地状态。
+ *
+ * 若原始项目树已加载，会基于 `rawTree` 重新过滤，避免设置切换时丢失被过滤的节点。
+ */
+function applyGallerySettings(): void {
+  const showValue = runtime.core.settings.get("gallery.showUnregisteredProjects");
+  showUnregistered.value = showValue !== false;
+
+  const depthValue = runtime.core.settings.get("gallery.treeExpandDepth");
+  expandDepth.value = typeof depthValue === "number" ? depthValue : 1;
+
+  if (rawTree.value) {
+    tree.value = filterProjectTreeForGallery(rawTree.value, {
+      showUnregistered: showUnregistered.value,
+    });
+  }
+}
+
+/**
+ * 订阅设置变更，使 `SettingsEditor` 中的修改能即时反映到项目树。
+ */
+function subscribeGallerySettings(): void {
+  unsubscribeSettings = runtime.core.settings.subscribe((change) => {
+    if (change.id === "gallery.showUnregisteredProjects") {
+      showUnregistered.value = change.value !== false;
+      if (rawTree.value) {
+        tree.value = filterProjectTreeForGallery(rawTree.value, {
+          showUnregistered: showUnregistered.value,
+        });
+      }
+    } else if (change.id === "gallery.treeExpandDepth") {
+      expandDepth.value = typeof change.value === "number" ? change.value : 1;
+    }
+  });
+}
+
+/** 响应命令面板 / 菜单 / 快捷键触发的“刷新项目树”。 */
+function handleRefreshTree(): void {
+  void loadTree();
+}
+
+/** 响应命令面板 / 菜单触发的“回到总览”。 */
+function handleGoHome(): void {
+  navigateTo(null);
 }
 
 const selectedEntry = computed(() =>
@@ -209,13 +264,23 @@ const selectedBadgesResolved = computed(() => {
 const selectedPayload = computed(() => JSON.stringify(props.context.editor.payload as JsonObject, null, 2));
 
 onMounted(() => {
+  // 等待设置持久化加载完成后再应用，避免与 runtime.boot() 的异步加载竞争。
+  void runtime.core.settings.load().then(() => {
+    applyGallerySettings();
+  });
+  subscribeGallerySettings();
   void loadTree();
   window.addEventListener("popstate", handlePopstate);
+  window.addEventListener("gallery:refresh-tree", handleRefreshTree);
+  window.addEventListener("gallery:go-home", handleGoHome);
 });
 
 onBeforeUnmount(() => {
   activeRequest?.abort();
+  unsubscribeSettings?.();
   window.removeEventListener("popstate", handlePopstate);
+  window.removeEventListener("gallery:refresh-tree", handleRefreshTree);
+  window.removeEventListener("gallery:go-home", handleGoHome);
 });
 </script>
 
@@ -299,6 +364,7 @@ onBeforeUnmount(() => {
               :key="`${node.type}:${node.path}`"
               :node="node"
               :selected-path="selectedProjectPath"
+              :expand-depth="expandDepth"
               @select="navigateTo($event)"
               @select-folder="navigateTo($event)"
             />

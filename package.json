@@ -15,7 +15,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "main-ui": "file:../main-ui",
+    "main-ui": "workspace:^0.1.1",
     "p5": "^1.11.11",
     "viewport-2d-kit": "file:../viewport-2d-kit",
     "vue": "^3.5.34"
