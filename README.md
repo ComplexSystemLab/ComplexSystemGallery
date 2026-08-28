@@ -95,10 +95,11 @@ pnpm preview
 
 - `src/main.ts`：Vue 应用入口
 - `src/App.vue`：挂载 `main-ui` 工作台壳
-- `src/runtime/createGalleryRuntime.ts`：注册 Gallery 工作区与编辑器
+- `src/runtime/createGalleryRuntime.ts`：注册 Gallery 工作区、编辑器、命令、菜单、快捷键与设置项
 - `src/workbench/GalleryWorkbenchEditor.vue`：主项目浏览器，组合项目树、视口和 demo 预览
+- `src/workbench/GallerySettingsEditor.vue`：Gallery 设置面板（基于 `main-ui` 的 `SettingsEditor`）
 - `src/components/ProjectTreeNodeItem.vue`：递归树节点组件
-- `src/projects/projectRegistry.ts`：项目注册表（标题、demoUrl、说明、标签）
+- `src/projects/projectRegistry.ts`：项目注册表（标题、demoUrl、说明、标签）与树过滤逻辑
 - `public/vendor/p5.min.js`：graph_algorithms_js demos 使用的本地 p5 资源
 - `src/types/projectTree.ts`：项目树节点类型
 - `public/projects-tree.json`：项目树数据（由脚本生成）

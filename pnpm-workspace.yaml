@@ -1,2 +1,5 @@
+packages:
+  - "."
+  - "../main-ui"
 allowBuilds:
   esbuild: true

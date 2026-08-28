@@ -107,12 +107,38 @@ export function isProjectVisibleInTree(projectPath: string): boolean {
 }
 
 /**
+ * 项目树过滤选项。
+ */
+export type FilterProjectTreeOptions = {
+  /** 是否在树中展示未注册项目；默认跟随 `SHOW_UNREGISTERED_PROJECTS_IN_TREE`。 */
+  showUnregistered?: boolean;
+};
+
+/**
  * 过滤项目树：移除不展示的项目，同时剪枝空文件夹。
  *
  * @param root 原始项目树。
+ * @param options 过滤选项。
  * @returns 过滤后的项目树。
  */
-export function filterProjectTreeForGallery(root: ProjectTree): ProjectTree {
+export function filterProjectTreeForGallery(
+  root: ProjectTree,
+  options: FilterProjectTreeOptions = {},
+): ProjectTree {
+  const showUnregistered = options.showUnregistered ?? SHOW_UNREGISTERED_PROJECTS_IN_TREE;
+
+  /**
+   * 判断单个项目路径是否应展示。
+   *
+   * @param projectPath 项目路径。
+   * @returns 是否展示。
+   */
+  function isVisible(projectPath: string): boolean {
+    if (showUnregistered) return true;
+    const entry = getGalleryProjectEntry(projectPath);
+    return Boolean(entry?.visibleInTree);
+  }
+
   /**
    * 递归过滤节点。
    *
@@ -121,7 +147,7 @@ export function filterProjectTreeForGallery(root: ProjectTree): ProjectTree {
    */
   function filterNode(node: ProjectTreeNode): ProjectTreeNode | null {
     if (node.type === "project") {
-      return isProjectVisibleInTree(node.path) ? node : null;
+      return isVisible(node.path) ? node : null;
     }
 
     const children = node.children.map(filterNode).filter(Boolean) as ProjectTreeNode[];
