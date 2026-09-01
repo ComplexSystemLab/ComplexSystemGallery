@@ -12,6 +12,12 @@ import {
 import { createMainUiRuntime } from "main-ui/vue";
 import GallerySettingsEditor from "../workbench/GallerySettingsEditor.vue";
 import GalleryWorkbenchEditor from "../workbench/GalleryWorkbenchEditor.vue";
+import GalleryConsoleEditor from "../workbench/GalleryConsoleEditor.vue";
+import GalleryFormEditor from "../workbench/GalleryFormEditor.vue";
+import GalleryTableEditor from "../workbench/GalleryTableEditor.vue";
+import GalleryTreeEditor from "../workbench/GalleryTreeEditor.vue";
+import GallerySandboxEditor from "../workbench/GallerySandboxEditor.vue";
+import P5CanvasEditor from "../workbench/P5CanvasEditor.vue";
 
 /**
  * 基于 localStorage 的设置持久化适配器。
@@ -86,13 +92,97 @@ const GALLERY_SETTINGS_EDITOR: EditorDescriptor = {
   }),
 };
 
+const P5_CANVAS_EDITOR: EditorDescriptor = {
+  kind: "gallery-p5-canvas",
+  title: "Complex Network Canvas",
+  description: "p5 网络粒子可视化画布，基于 view-host-engine 桥接。",
+  icon: "PN",
+  rendererKey: "gallery-p5-canvas-editor",
+  capability: {
+    ...defaultEditorCapability,
+    allowMultipleInstances: true,
+    allowDuplicate: true,
+  },
+  presentation: defaultTabPresentation,
+  availability: {
+    allowedWorkspaceIds: ["gallery"],
+  },
+  createDefaultPayload: () => ({
+    mode: "p5-canvas",
+  }),
+};
+
+const TREE_EDITOR: EditorDescriptor = {
+  kind: "gallery-tree",
+  title: "Project Tree",
+  description: "虚拟滚动项目树，基于 view-tree 模板。",
+  icon: "TR",
+  rendererKey: "gallery-tree-editor",
+  capability: { ...defaultEditorCapability, allowMultipleInstances: true },
+  presentation: defaultTabPresentation,
+  availability: { allowedWorkspaceIds: ["gallery"] },
+  createDefaultPayload: () => ({ mode: "tree" }),
+};
+
+const TABLE_EDITOR: EditorDescriptor = {
+  kind: "gallery-table",
+  title: "Project List",
+  description: "虚拟滚动项目表格，基于 view-table 模板。",
+  icon: "TB",
+  rendererKey: "gallery-table-editor",
+  capability: { ...defaultEditorCapability, allowMultipleInstances: true },
+  presentation: defaultTabPresentation,
+  availability: { allowedWorkspaceIds: ["gallery"] },
+  createDefaultPayload: () => ({ mode: "table" }),
+};
+
+const CONSOLE_EDITOR: EditorDescriptor = {
+  kind: "gallery-console",
+  title: "Gallery Console",
+  description: "运行日志，基于 view-console 模板。",
+  icon: "CS",
+  rendererKey: "gallery-console-editor",
+  capability: { ...defaultEditorCapability, allowMultipleInstances: true },
+  presentation: defaultTabPresentation,
+  availability: { allowedWorkspaceIds: ["gallery"] },
+  createDefaultPayload: () => ({ mode: "console" }),
+};
+
+const FORM_EDITOR: EditorDescriptor = {
+  kind: "gallery-form",
+  title: "Visualization Parameters",
+  description: "可视化参数配置，基于 view-form 模板。",
+  icon: "FM",
+  rendererKey: "gallery-form-editor",
+  capability: { ...defaultEditorCapability, allowMultipleInstances: false },
+  presentation: defaultTabPresentation,
+  availability: { allowedWorkspaceIds: ["gallery"] },
+  createDefaultPayload: () => ({ mode: "form" }),
+};
+
+const SANDBOX_EDITOR: EditorDescriptor = {
+  kind: "gallery-sandbox",
+  title: "Exhibition Sandbox",
+  description: "自由沙盘画布，旗舰复合模板展项试点。",
+  icon: "SB",
+  rendererKey: "gallery-sandbox-editor",
+  capability: { ...defaultEditorCapability, allowMultipleInstances: true, allowDuplicate: true },
+  presentation: defaultTabPresentation,
+  availability: { allowedWorkspaceIds: ["gallery"] },
+  createDefaultPayload: () => ({ mode: "sandbox" }),
+};
+
 const GALLERY_WORKSPACE: WorkspaceDescriptor = {
   id: "gallery",
   title: "Gallery",
   description: "ComplexSystemLab project browser.",
   icon: "CG",
-  allowedEditorKinds: [GALLERY_EDITOR.kind, GALLERY_SETTINGS_EDITOR.kind],
-  recommendedEditorKinds: [GALLERY_EDITOR.kind],
+  allowedEditorKinds: [
+    GALLERY_EDITOR.kind, GALLERY_SETTINGS_EDITOR.kind, P5_CANVAS_EDITOR.kind,
+    TREE_EDITOR.kind, TABLE_EDITOR.kind, CONSOLE_EDITOR.kind, FORM_EDITOR.kind,
+    SANDBOX_EDITOR.kind,
+  ],
+  recommendedEditorKinds: [GALLERY_EDITOR.kind, P5_CANVAS_EDITOR.kind, TREE_EDITOR.kind, SANDBOX_EDITOR.kind],
   defaultOpenRequests: [
     {
       editorKind: GALLERY_EDITOR.kind,
@@ -118,9 +208,21 @@ export function createGalleryRuntime() {
 
   runtime.core.registerEditor(GALLERY_EDITOR);
   runtime.core.registerEditor(GALLERY_SETTINGS_EDITOR);
+  runtime.core.registerEditor(P5_CANVAS_EDITOR);
+  runtime.core.registerEditor(TREE_EDITOR);
+  runtime.core.registerEditor(TABLE_EDITOR);
+  runtime.core.registerEditor(CONSOLE_EDITOR);
+  runtime.core.registerEditor(FORM_EDITOR);
+  runtime.core.registerEditor(SANDBOX_EDITOR);
   runtime.core.registerWorkspace(GALLERY_WORKSPACE);
   runtime.vue.registerEditorRenderer(GALLERY_EDITOR.rendererKey, GalleryWorkbenchEditor);
   runtime.vue.registerEditorRenderer(GALLERY_SETTINGS_EDITOR.rendererKey, GallerySettingsEditor);
+  runtime.vue.registerEditorRenderer(P5_CANVAS_EDITOR.rendererKey, P5CanvasEditor);
+  runtime.vue.registerEditorRenderer(TREE_EDITOR.rendererKey, GalleryTreeEditor);
+  runtime.vue.registerEditorRenderer(TABLE_EDITOR.rendererKey, GalleryTableEditor);
+  runtime.vue.registerEditorRenderer(CONSOLE_EDITOR.rendererKey, GalleryConsoleEditor);
+  runtime.vue.registerEditorRenderer(FORM_EDITOR.rendererKey, GalleryFormEditor);
+  runtime.vue.registerEditorRenderer(SANDBOX_EDITOR.rendererKey, GallerySandboxEditor);
 
   // 命令：通过 window 自定义事件与编辑器解耦，或直接 dispatch 布局动作。
   runtime.core.registerCommand({

@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
 import type { EditorRenderContext, JsonObject } from "main-ui/core";
 import { useWorkbench } from "main-ui/vue";
-import { ViewportBusinessCanvasShell } from "viewport-2d-kit/vue";
+import { ViewportBusinessCanvasShell } from "@main-ui/viewport-2d-kit/vue";
 import ProjectTreeNodeItem from "../components/ProjectTreeNodeItem.vue";
 import {
   filterProjectTreeForGallery,

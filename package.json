@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build:deps": "pnpm --dir ../main-ui build && pnpm --dir ../viewport-2d-kit build",
+    "build:deps": "pnpm --dir ../main-ui build",
     "gen:tree": "node scripts/build-project-tree.mjs",
     "sync:demo-vendor": "node scripts/sync-demo-vendor.mjs",
     "predev": "pnpm build:deps && pnpm sync:demo-vendor && pnpm gen:tree",
@@ -15,9 +15,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "main-ui": "workspace:^0.1.1",
+    "@main-ui/core": "workspace:*",
+    "@main-ui/view-console": "workspace:*",
+    "@main-ui/view-form": "workspace:*",
+    "@main-ui/view-host-engine": "workspace:*",
+    "@main-ui/view-sandbox": "workspace:*",
+    "@main-ui/view-table": "workspace:*",
+    "@main-ui/view-tree": "workspace:*",
+    "@main-ui/viewport-2d-kit": "workspace:*",
+    "main-ui": "workspace:^0.6.0",
     "p5": "^1.11.11",
-    "viewport-2d-kit": "file:../viewport-2d-kit",
     "vue": "^3.5.34"
   },
   "devDependencies": {

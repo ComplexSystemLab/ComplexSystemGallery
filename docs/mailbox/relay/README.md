@@ -29,11 +29,13 @@ docs/mailbox/relay/
 打开 `updates/inbox/` 和 `feedback/inbox/`，看是否有新 `.md` 文件。
 
 ### 写信
-在对应功能目录创建 `{peerProjectId}/{peerProjectId}.md` 文件（先建子文件夹）。
+在对应功能目录创建 `{peerProjectId}/{peerProjectId}-{YYYYMMDDHHmmss}.md` 文件（先建子文件夹）。文件名带时间戳，多封信不互相覆盖。
 
-### 投递
-需要启动 mailbox API 后端执行投递，把 outbox 的信投递到对方 inbox。
-启动方式：`cd autodo-app && pnpm run mailbox:api`。
+### 投递（自助）
+写完信后默认直接复制到对方项目对应 inbox 目录（见 `.ai-instructions.md`），无需等待统一投递。
+
+### 统一投递 / 归档
+需要时由「多项目联动治理体系智能体」执行：`autodo-app/scripts/governance_backend` 下的 CLI（bootstrap / deliver / archive）或 `pnpm run mailbox:api` 后端。
 
 ## AI Agent 指引
 
