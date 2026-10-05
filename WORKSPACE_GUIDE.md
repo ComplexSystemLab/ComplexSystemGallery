@@ -1,34 +1,40 @@
-# ComplexSystemGallery 工作区引导
+# ComplexSystemGallery 项目引导
 
-> 本文件帮助 AI Agent 快速了解工作区结构，特别适用于移动端无法浏览文件树的场景。
+> 本文件帮助 AI Agent 用最少 token 了解**本项目**自身结构。不含其他项目路径，可安全入库。跨项目关系见联合体索引。
 
-## 工作区概览
+## 项目概览
 
-- **工作区名称**: ComplexSystemGallery
-- **文件夹数量**: 2
+- **项目名称**: ComplexSystemGallery
+- **文件夹数量**: 1
 
 ## 文件夹清单
 
 ### 📁 项目
 
 #### ComplexSystemGallery
-- **路径**: `/Users/ethan/CoreFiles/ProjectsFile/ComplexSystemGallery`
+- **路径**: `./`
 - **说明**: 项目文件夹
 
-#### ComplexSystemLab
-- **路径**: `/Users/ethan/CoreFiles/ProjectsFile/ComplexSystemLab`
-- **说明**: 项目文件夹
+## 项目结构速查
 
-## 常用入口
-
-### 任务与笔记
-- 每个笔记项目通常包含 `tasks/`（任务）、`notes/`（笔记）、`archive/`（归档）
-- 在对话中说「查看任务」或「打开笔记」，AI 会自动定位
-
-### 代码仓库
-- 源码通常在 `src/`、`autodokit/`、`electron/` 等目录
-- 文档在 `docs/` 目录
+- `docs/`
+- `public/`
+- `scripts/`
+- `src/`
+- `AGENTS.md`
+- `CLAUDE.md`
+- `README.md`
+- `WORKSPACE_GUIDE.md`
+- `eslint.config.js`
+- `index.html`
+- `package.json`
+- `pnpm-lock.yaml`
+- `pnpm-workspace.yaml`
+- `tsconfig.app.json`
+- `tsconfig.json`
+- `tsconfig.node.json`
+- `vite.config.ts`
 
 ---
 
-*本文件由 `mlms_kit.aoc.workspace_guides` 自动生成*
+*本文件由 `mlms_kit.aoc.workspace_guides` 自动生成（项目自述版）*
