@@ -7,5 +7,41 @@
 			"path": "../ComplexSystemLab"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"window.autoDetectColorScheme": true,
+"workbench.colorCustomizations": {
+			// 亮色模式：青色系 → 浅青
+			"MacOS Modern Light - Ventura Xcode Default": {
+				"editor.background": "#d7fcff",
+				"editor.foreground": "#1e2b2b",
+				"editorCursor.foreground": "#0a9ad8",
+				"editorLineNumber.foreground": "#6b8b8b",
+				"editor.selectionBackground": "#a4f9ff"
+			},
+			// 暗色模式：青色系 → 深青蓝
+			"MacOS Modern Dark - Ventura Xcode Default": {
+				"editor.background": "#1e2b2b",
+				"editor.foreground": "#eaf6f6",
+				"editorCursor.foreground": "#58ccff",
+				"editorLineNumber.foreground": "#a6bbbb",
+				"editor.selectionBackground": "#1657c7"
+			},
+			// 兼容内置主题：青色系（亮色）
+			"Light 2026": {
+				"editor.background": "#d7fcff",
+				"editor.foreground": "#1e2b2b",
+				"editorCursor.foreground": "#0a9ad8",
+				"editorLineNumber.foreground": "#6b8b8b",
+				"editor.selectionBackground": "#a4f9ff"
+			},
+			// 兼容内置主题：青色系（暗色）
+			"Dark 2026": {
+				"editor.background": "#1e2b2b",
+				"editor.foreground": "#eaf6f6",
+				"editorCursor.foreground": "#58ccff",
+				"editorLineNumber.foreground": "#a6bbbb",
+				"editor.selectionBackground": "#1657c7"
+			}
+		}
+	}
 }
