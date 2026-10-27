@@ -14,32 +14,46 @@
       ]
     },
     {
-      "type": "project",
-      "name": "cascade_reaction",
-      "path": "cascade_reaction",
-      "detectedBy": "project.txt",
-      "projectFiles": [
-        "_quarto.yml",
-        "cascade_reaction.html",
-        "cascade_reaction.ipynb",
-        "cascade_reaction.jl",
-        "cascade_reaction.qmd",
-        "project.txt"
-      ],
-      "autoDemoUrl": "/projects-src/cascade_reaction/cascade_reaction.html"
-    },
-    {
-      "type": "project",
-      "name": "cascading_failures",
-      "path": "cascading_failures",
-      "detectedBy": "project.txt",
-      "projectFiles": [
-        "_quarto.yml",
-        "cascading_failures.html",
-        "cascading_failures.ipynb",
-        "project.txt"
-      ],
-      "autoDemoUrl": "/projects-src/cascading_failures/cascading_failures.html"
+      "type": "folder",
+      "name": "cascading_dynamics",
+      "path": "cascading_dynamics",
+      "children": [
+        {
+          "type": "folder",
+          "name": "archive",
+          "path": "cascading_dynamics/archive",
+          "children": [
+            {
+              "type": "project",
+              "name": "cascade_reaction",
+              "path": "cascading_dynamics/archive/cascade_reaction",
+              "detectedBy": "project.txt",
+              "projectFiles": [
+                "_quarto.yml",
+                "cascade_reaction.html",
+                "cascade_reaction.ipynb",
+                "cascade_reaction.jl",
+                "cascade_reaction.qmd",
+                "project.txt"
+              ],
+              "autoDemoUrl": "/projects-src/cascading_dynamics/archive/cascade_reaction/cascade_reaction.html"
+            },
+            {
+              "type": "project",
+              "name": "cascading_failures",
+              "path": "cascading_dynamics/archive/cascading_failures",
+              "detectedBy": "project.txt",
+              "projectFiles": [
+                "_quarto.yml",
+                "cascading_failures.html",
+                "cascading_failures.ipynb",
+                "project.txt"
+              ],
+              "autoDemoUrl": "/projects-src/cascading_dynamics/archive/cascading_failures/cascading_failures.html"
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "folder",
@@ -70,16 +84,6 @@
           ],
           "autoDemoUrl": "/projects-src/Diplomatic/art_of_diplomatic_v1.0/art_of_diplomatic_v1.0.html"
         }
-      ]
-    },
-    {
-      "type": "project",
-      "name": "ECS",
-      "path": "ECS",
-      "detectedBy": "project.txt",
-      "projectFiles": [
-        "project.txt",
-        "README.md"
       ]
     },
     {
@@ -136,6 +140,35 @@
       "projectFiles": [
         "main.py",
         "project.txt"
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "games_explore",
+      "path": "games_explore",
+      "children": [
+        {
+          "type": "project",
+          "name": "functions",
+          "path": "games_explore/functions",
+          "detectedBy": "html-entry",
+          "projectFiles": [
+            "导入CSV矩阵生成地图数据文件.py",
+            "导入GLTF文件预览.js",
+            "根据底图绘制网络图数据.js",
+            "根据底图绘制网络图数据.py",
+            "生成平面圆边空白地形.py",
+            "生成平面圆边随机地形.js",
+            "生成平面圆边随机地形.py",
+            "Blender导入CSV导出mesh格式文件.ipynb",
+            "Blender导入CSV导出mesh格式文件.py",
+            "index.html",
+            "slime_mold_simulation.js",
+            "style.css",
+            "utils.py"
+          ],
+          "autoDemoUrl": "/projects-src/games_explore/functions/index.html"
+        }
       ]
     },
     {
@@ -282,7 +315,9 @@
           "path": "grid_evoluation/《自然规律支配偶然性》_MATLAB",
           "detectedBy": "project.txt",
           "projectFiles": [
+            "AGENTS.md",
             "Balance.m",
+            "CLAUDE.md",
             "ComplexElementsGame_MATLAB.code-workspace",
             "fun_Balance.m",
             "fun_RandomFly.m",
@@ -290,7 +325,8 @@
             "playerColorNames.mat",
             "playRules.mat",
             "project.txt",
-            "RandomFly.m"
+            "RandomFly.m",
+            "WORKSPACE_GUIDE.md"
           ]
         },
         {
@@ -318,18 +354,8 @@
         "预寻路简易的分级道路交通网络地图.py",
         "generate_simple_hierarchical_road_traffic_network_map.jl",
         "generate_simple_hierarchical_road_traffic_network_map.py",
-        "project.txt"
-      ]
-    },
-    {
-      "type": "project",
-      "name": "math_symbolic_computation",
-      "path": "math_symbolic_computation",
-      "detectedBy": "project.txt",
-      "projectFiles": [
-        "数学符号计算",
-        "MathSymbolicComputationEngine",
-        "project.txt"
+        "project.txt",
+        "roads_network.py"
       ]
     },
     {
@@ -372,23 +398,8 @@
         "visibility_pathfinding.js"
       ],
       "autoDemoUrl": "/projects-src/navigation-html-js/index.html"
-    },
-    {
-      "type": "project",
-      "name": "symbolic_computation_engine",
-      "path": "symbolic_computation_engine",
-      "detectedBy": "project.txt",
-      "projectFiles": [
-        "论符号计算系统.aux",
-        "论符号计算系统.log",
-        "论符号计算系统.out",
-        "论符号计算系统.pdf",
-        "论符号计算系统.synctex.gz",
-        "论符号计算系统.toc",
-        "project.txt"
-      ]
     }
   ],
-  "generatedAt": "2026-08-24T23:36:58.449Z",
+  "generatedAt": "2026-10-15T04:10:50.328Z",
   "source": "ComplexSystemLab/ComplexSystemLab/Projects"
 }
