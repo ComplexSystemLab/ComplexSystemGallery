@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
 import type { EditorRenderContext, JsonObject } from "main-ui/core";
 import { useWorkbench } from "main-ui/vue";
-import { ViewportBusinessCanvasShell } from "viewport-2d-kit/vue";
+import { ViewportCanvasShell } from "@main-ui/view-canvas";
 import ProjectTreeNodeItem from "../components/ProjectTreeNodeItem.vue";
 import {
   filterProjectTreeForGallery,
@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="gallery-editor">
-    <ViewportBusinessCanvasShell
+    <ViewportCanvasShell
       :left-panel-width="320"
       :right-panel-width="360"
       :toolbar-height="48"
@@ -311,7 +311,7 @@ onBeforeUnmount(() => {
           </div>
 
           <p class="panel-copy">
-            当前站点已迁移到 Vue3，并通过 main-ui 作为工作台壳，使用 viewport-2d-kit 承载项目概览视口。
+            当前站点已迁移到 Vue3，并通过 main-ui 作为工作台壳，使用 view-canvas 承载项目概览视口。
           </p>
 
           <div class="stat-grid">
@@ -583,7 +583,7 @@ onBeforeUnmount(() => {
           </div>
         </section>
       </template>
-    </ViewportBusinessCanvasShell>
+    </ViewportCanvasShell>
   </div>
 </template>
 
