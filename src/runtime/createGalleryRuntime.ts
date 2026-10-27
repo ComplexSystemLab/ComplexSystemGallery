@@ -9,6 +9,7 @@ import {
   type SettingsSnapshot,
   type WorkspaceDescriptor,
 } from "main-ui/core";
+import { draftFromText } from "@main-ui/core/input";
 import { createMainUiRuntime } from "main-ui/vue";
 import GallerySettingsEditor from "../workbench/GallerySettingsEditor.vue";
 import GalleryWorkbenchEditor from "../workbench/GalleryWorkbenchEditor.vue";
@@ -48,7 +49,7 @@ const createLocalStorageSettingsPersistenceAdapter = (
 const GALLERY_EDITOR: EditorDescriptor = {
   kind: "gallery-browser",
   title: "Project Browser",
-  description: "Vue3 gallery surface backed by main-ui and viewport-2d-kit.",
+  description: "Vue3 gallery surface backed by main-ui and view-canvas.",
   icon: "CG",
   rendererKey: "gallery-browser-editor",
   capability: {
@@ -151,10 +152,10 @@ export function createGalleryRuntime() {
     },
   });
 
-  // 快捷键：Cmd/Ctrl+R 刷新项目树（不拦截输入框内按键）。
-  runtime.core.registerKeybinding({
+  // 快捷键：⌘/Ctrl+R 刷新项目树（不拦截输入框内按键）。
+  runtime.core.input.register({
     commandId: "gallery.refreshTree",
-    keybinding: "Cmd+R",
+    ...draftFromText("cmd+press:KeyR"),
     allowInInput: false,
   });
 
