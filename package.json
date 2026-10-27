@@ -16,14 +16,14 @@
   },
   "dependencies": {
     "@main-ui/core": "workspace:*",
+    "@main-ui/view-canvas": "workspace:*",
     "@main-ui/view-console": "workspace:*",
     "@main-ui/view-form": "workspace:*",
     "@main-ui/view-host-engine": "workspace:*",
     "@main-ui/view-sandbox": "workspace:*",
     "@main-ui/view-table": "workspace:*",
     "@main-ui/view-tree": "workspace:*",
-    "@main-ui/viewport-2d-kit": "workspace:*",
-    "main-ui": "workspace:^0.6.0",
+    "main-ui": "workspace:^0.7.0",
     "p5": "^1.11.11",
     "vue": "^3.5.34"
   },
