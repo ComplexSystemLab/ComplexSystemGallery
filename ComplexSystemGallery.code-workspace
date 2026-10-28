@@ -5,6 +5,14 @@
 		},
 		{
 			"path": "../ComplexSystemLab"
+		},
+		{
+			"name": "笔记：复杂系统科学探索（UHW 指针所在）",
+			"path": "../../../Library/Mobile Documents/iCloud~md~obsidian/Documents/CS_notebook"
+		},
+		{
+			"name": "笔记：复杂系统科学探索展览馆（本仓落点）",
+			"path": "../../../Library/Mobile Documents/iCloud~md~obsidian/Documents/Engs_notebook/Projects/复杂系统科学探索展览馆"
 		}
 	],
 	"settings": {
