@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@main-ui/core':
-        specifier: workspace:^0.10.0
+        specifier: workspace:^0.11.0
         version: link:../main-ui/packages/core
       '@main-ui/view-canvas':
         specifier: workspace:^0.9.0
@@ -24,7 +24,7 @@ importers:
         specifier: workspace:^0.6.0
         version: link:../main-ui/packages/view-host-engine
       '@main-ui/view-sandbox':
-        specifier: workspace:^0.7.0
+        specifier: workspace:^0.8.0
         version: link:../main-ui/packages/view-sandbox
       '@main-ui/view-table':
         specifier: workspace:^0.4.0
@@ -33,7 +33,7 @@ importers:
         specifier: workspace:^0.4.0
         version: link:../main-ui/packages/view-tree
       main-ui:
-        specifier: workspace:^0.11.0
+        specifier: workspace:^0.12.0
         version: link:../main-ui/packages/main-ui
       p5:
         specifier: ^1.11.11
